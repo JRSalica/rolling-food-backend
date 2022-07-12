@@ -31,9 +31,44 @@ async function registerUser(req, res){
 
 async function loginUser(req, res){
   try{
-    
-  } catch(error) {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email }).select('+password');
 
+    if(user === null){
+      return res.status(404).json({
+        ok: false,
+        message: 'No existe un usuario registrado con ese email.'
+      });
+    }
+
+    if(await user.comparePassword(password) === false){
+      return res.status(401).json({
+        ok: false,
+        message: 'Contraseña incorrecta.'
+      });
+    }
+
+    if(user.active === false){
+      return res.status(401).json({
+        ok: false,
+        message: 'El usuario no se encuentra activo.'
+      })
+    }
+
+    const accessToken = await user.generateAuthToken()
+    res.json({
+      ok: true,
+      message: 'Ingreso exitoso.',
+      accessToken,
+    });
+
+  } catch(error) {
+    console.error(error);
+    return res.status(500),json({
+      ok: false,
+      message: 'Error al intentar ingresar. Verificar detalles del error a continuacion...',
+      error,
+    });
   }
 }
 

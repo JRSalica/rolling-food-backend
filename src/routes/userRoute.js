@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
+const authenticateJWT = require('../middlewares/authenticateJWT');
+const checkIsAdmin = require('../middlewares/checkIsAdmin');
 
-router.get('/', userController.getUsers);
+router.get('/', authenticateJWT, checkIsAdmin, userController.getUsers);
 
 // router.param('id', (req, res, next, id) => {
 

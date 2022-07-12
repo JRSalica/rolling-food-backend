@@ -2,10 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const uniqueValidator = require('mongoose-unique-validator');
 
-
 const bcrypt = require('bcrypt');
 const SALT_WORK_FACTOR = 10;
-
+const jwt = require('jsonwebtoken');
 
 const VALID_ROLES = [
   'ADMIN_ROLE',
@@ -71,8 +70,18 @@ UserSchema.methods.comparePassword = async function(candidatePassword){
   } catch (error) {
     throw console.error('Error de desencriptado.', error)
   }
+};
 
-}
+UserSchema.methods.generateAuthToken = async function(){
+  try {
+    const accessToken = await jwt.sign(this.toJSON(), process.env.SECRET, { expiresIn: '1h' });
+    return accessToken;
+    
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
+};
 
 UserSchema.set('toJSON', { transform: (document, returnedObject) => {
   delete returnedObject._id;

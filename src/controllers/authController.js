@@ -3,14 +3,6 @@ const User = require('../models/User');
 
 async function registerUser(req, res){
   try {
-    // let existentUser = await User.findOne({ email: req.body.email });
-    // if(existentUser){
-    //   return res.status(409).json({
-    //     ok: false,
-    //     message: 'El email ingresado ya se encuentra registrado. Use otro.',
-    //   });
-    // }
-
     let comingUser = new User(req.body);
     const registeredUser = await comingUser.save();
     return res.status(201).json({
@@ -23,7 +15,7 @@ async function registerUser(req, res){
     console.error(error);
     return res.status(500).json({
       ok: false,
-      message: 'Error al crear un nuevo usuario. Verificar detalles del error a continuacion...',
+      message: 'Error al crear un nuevo usuario.',
       error,
     });
   }
@@ -66,7 +58,7 @@ async function loginUser(req, res){
     console.error(error);
     return res.status(500),json({
       ok: false,
-      message: 'Error al intentar ingresar. Verificar detalles del error a continuacion...',
+      message: 'Error al intentar ingresar.',
       error,
     });
   }

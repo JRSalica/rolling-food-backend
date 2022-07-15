@@ -21,7 +21,7 @@ async function getUsers(req, res){
     console.error(error);
     return res.status(500).json({
       ok: false,
-      message: 'Error al obtener los usuarios.',
+      message: 'Error al intentar obtener los usuarios.',
       error,
     });
   }

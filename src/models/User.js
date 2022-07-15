@@ -26,7 +26,6 @@ const UserSchema = new Schema({
     unique: true,
     uniqueCaseInsensitive: true,
     index: true,
-    // validate: [uniqueEmailValidator, 'El email ingresado ya esta en uso.'],
   },
   password: {
     type: String,
@@ -47,7 +46,6 @@ const UserSchema = new Schema({
 }, { timeStamps: true });
 
 UserSchema.plugin(uniqueValidator, {message: 'El email ingresado ya se encuentra registrado. Utilice otro.'});
-// runValidators: true, context: 'query' --> when findOneAndUpdate()
 
 UserSchema.pre('save', async function(next){
   try{
@@ -90,12 +88,3 @@ UserSchema.set('toJSON', { transform: (document, returnedObject) => {
 }});
 
 module.exports = mongoose.model('User', UserSchema);
-
-// async function uniqueEmailValidator(email){
-//   const user = await this.constructor.findOne({ email });
-//   if(user){
-//     if(this.id === user.id) return true;
-//     return false;
-//   }
-//   return true;
-// }

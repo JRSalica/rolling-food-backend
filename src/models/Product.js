@@ -20,7 +20,7 @@ const ProductSchema = new Schema({
     required: true,
     min: [0, 'El valor debe ser mayor a 0.'],
     max: [10000, 'El valor no debe superar los 10000.'],
-    match: [/(^\d{1,10}$)/, 'Solo numeros enteros y positivos.']
+    match: [/(^\d{1,10})/, 'Solo numeros enteros y positivos.']
   },
   category:{
     type: mongoose.Schema.Types.ObjectId,

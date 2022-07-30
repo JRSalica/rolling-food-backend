@@ -2,7 +2,7 @@ const Order = require('../models/Order');
 
 async function getOrders(req, res){
   try {
-    orders = await Order.find({ });
+    orders = await Order.find({ }).populate('products.productId').populate('user');
 
     if(orders.length === 0){
       return res.json({
@@ -49,6 +49,25 @@ async function getOrder(req, res){
     return res.status(500).json({
       ok: false,
       message: 'Error al intentar obtener la orden solicitada.',
+      error,
+    });
+  }
+}
+
+async function createOrder(req, res){
+  try {
+    let comingOrder = new Order(req.body);
+    const newOrder = await comingOrder.save();
+    return res.status(201).json({
+      ok: true,
+      message: 'Order creada correctamente.',
+      newOrder,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      ok: false,
+      message: 'Error al crear la orden.',
       error,
     });
   }
@@ -119,6 +138,7 @@ async function deleteOrder(req, res){
 module.exports = {
   getOrders,
   getOrder,
+  createOrder,
   updateOrder,
   deleteOrder,
 };

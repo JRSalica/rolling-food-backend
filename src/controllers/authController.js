@@ -40,23 +40,25 @@ async function loginUser(req, res){
       });
     }
 
+
     if(user.active === false){
       return res.status(401).json({
         ok: false,
         message: 'El usuario no se encuentra activo.'
       })
     }
-
-    const accessToken = await user.generateAuthToken()
+    
+    const token = await user.generateAuthToken()
     res.json({
       ok: true,
       message: 'Ingreso exitoso.',
-      accessToken,
+      user,
+      token,
     });
 
   } catch(error) {
     console.error(error);
-    return res.status(500),json({
+    return res.status(500).json({
       ok: false,
       message: 'Error al intentar ingresar.',
       error,

@@ -54,6 +54,25 @@ async function getCategory(req, res){
   }
 }
 
+async function createCategory(req, res){
+  try {
+    let comingCategory = new Category(req.body);
+    const newCategory = await comingCategory.save();
+    return res.status(201).json({
+      ok: true,
+      message: 'Categoria creada correctamente.',
+      newCategory,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      ok: false,
+      message: 'Error al crear una nueva categoria.',
+      error,
+    });
+  }
+}
+
 async function updateCategory(req, res){
   try {
     if(req.body.constructor === Object && Object.keys(req.body).length === 0){
@@ -120,6 +139,7 @@ async function deleteCategory(req, res){
 module.exports = {
   getCategories,
   getCategory,
+  createCategory,
   updateCategory,
   deleteCategory,
 };

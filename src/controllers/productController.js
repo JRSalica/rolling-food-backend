@@ -2,7 +2,7 @@ const Product = require('../models/Product');
 
 async function getProducts(req, res){
   try {
-    products = await Product.find({ });
+    products = await Product.find({ }).populate('category');
 
     if(products.length === 0){
       return res.json({
@@ -50,6 +50,25 @@ async function getProduct(req, res){
       ok: false,
       message: 'Error al intentar obtener el producto solicitado.',
       error,
+    });
+  }
+}
+
+async function createProduct(req, res){
+  try {
+    let comingProduct = new Product(req.body);
+    const newProduct = await comingProduct.save();
+    return res.status(201).json({
+      ok: true,
+      message: 'Producto creado correctamente.',
+      newProduct,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      ok: false,
+      message: 'Error al crear producto.',
+      error
     });
   }
 }
@@ -119,6 +138,7 @@ async function deleteProduct(req, res){
 module.exports = {
   getProducts,
   getProduct,
+  createProduct,
   updateProduct,
   deleteProduct,
 };

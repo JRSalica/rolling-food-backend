@@ -72,7 +72,7 @@ UserSchema.methods.comparePassword = async function(candidatePassword){
 
 UserSchema.methods.generateAuthToken = async function(){
   try {
-    const accessToken = await jwt.sign(this.toJSON(), process.env.SECRET, { expiresIn: '1h' });
+    const accessToken = await jwt.sign(this.toJSON(), process.env.SECRET, { expiresIn: '10h' });
     return accessToken;
     
   } catch (error) {

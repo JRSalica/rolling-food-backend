@@ -84,8 +84,8 @@ async function updateProduct(req, res){
 
     const productId = req.params.id;
     const productDataToUpdate = req.body;
-    const updateProduct = await Product.findByIdAndUpdate(productId, productDataToUpdate, { new: true, runValidators: true, context: 'query' });
-    if(updateProduct === null){
+    const updatedProduct = await Product.findByIdAndUpdate(productId, productDataToUpdate, { new: true, runValidators: true, context: 'query' });
+    if(updatedProduct === null){
       return res.status(404).json({
         ok: true,
         message: 'No se puede modificar. El usuario no existe.'
@@ -95,7 +95,7 @@ async function updateProduct(req, res){
     return res.json({
       ok: true,
       message: 'Producto modificado.',
-      updateProduct,
+      updatedProduct,
     });
 
   } catch (error) {

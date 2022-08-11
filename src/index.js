@@ -4,7 +4,6 @@ const app = require('./app');
 require('dotenv').config();
 const connectionString = process.env.DB_URI;
 const port = process.env.PORT || 3400;
-const host = '0.0.0.0';
 
 async function initializeServer(){
   try{
@@ -12,7 +11,7 @@ async function initializeServer(){
     await mongoose.connect(connectionString);
     console.info('\u001b[1;32m Conexion a la DB exitosa.');
 
-    app.listen(port, host, () =>{
+    app.listen(port, () =>{
       console.info(`\u001b[1;34m Servidor escuchando en el puerto: ${port}`);
     });
   } catch(error){

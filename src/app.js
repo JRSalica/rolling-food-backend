@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-app.get('/home', (req, res)=>{
+app.get('/', (req, res)=>{
   return res.send('Hola! Estas en la ruta principal del servidor.');
 });
 

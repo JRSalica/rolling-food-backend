@@ -15,9 +15,6 @@ const OrderSchema = new Schema({
         type: Number,
         required: [true, 'Debe ingresar la cantidad solicitada del producto.'],
       },
-      totalPrice: {
-        type: Number,
-      }
     },
   ],
   user: {
@@ -30,7 +27,7 @@ const OrderSchema = new Schema({
     required: true,
     default: Date.now,
   },
-  amount: {
+  total: {
     type: Number,
   }
 }, { timestamps: true });

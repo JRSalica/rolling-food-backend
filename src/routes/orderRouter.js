@@ -3,7 +3,7 @@ const router = require('express').Router();
 const orderController = require('../controllers/orderController');
 const { authenticateJWT, checkIsAdmin } = require('../middlewares/index');
 
-router.get('/', [authenticateJWT, checkIsAdmin], orderController.getOrders);
+router.get('/', [authenticateJWT], orderController.getOrders);
 router.post('/', [authenticateJWT], orderController.createOrder);
 
 router.route('/:id')

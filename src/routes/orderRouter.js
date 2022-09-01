@@ -4,7 +4,7 @@ const orderController = require('../controllers/orderController');
 const { authenticateJWT, checkIsAdmin } = require('../middlewares/index');
 
 router.get('/', [authenticateJWT, checkIsAdmin], orderController.getOrders);
-router.post('/', [authenticateJWT, checkIsAdmin], orderController.createOrder);
+router.post('/', [authenticateJWT], orderController.createOrder);
 
 router.route('/:id')
   .get([authenticateJWT, checkIsAdmin], orderController.getOrder)

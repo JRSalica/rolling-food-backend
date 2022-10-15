@@ -22,7 +22,7 @@ const ProductSchema = new Schema({
     max: [10000, 'El valor no debe superar los 10000.'],
     match: [/(^\d{1,10})/, 'Solo numeros enteros y positivos.']
   },
-  category:{
+  category: {
     type: mongoose.Schema.Types.ObjectId,
     required: [true, 'Debe seleccionar una categoria para el producto.'],
     ref: 'Category',
@@ -34,8 +34,10 @@ const ProductSchema = new Schema({
   },
 }, { timeStamps: true });
 
-ProductSchema.set('toJSON', { transform: (document, returnedObject) =>{
-  delete returnedObject.__v;
-}});
+ProductSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    delete returnedObject.__v;
+  }
+});
 
 module.exports = mongoose.model('Product', ProductSchema);

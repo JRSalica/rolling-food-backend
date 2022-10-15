@@ -1,10 +1,10 @@
 const User = require('../models/User');
 
-async function getUsers(req, res){
+async function getUsers(req, res) {
   try {
-    users = await User.find({ });
+    users = await User.find({});
 
-    if(users.length === 0){
+    if (users.length === 0) {
       return res.json({
         ok: true,
         message: 'No se encontraron usuarios.',
@@ -27,11 +27,11 @@ async function getUsers(req, res){
   }
 }
 
-async function getUser(req, res){
+async function getUser(req, res) {
   try {
     const userId = req.params.id;
     const user = await User.findById(userId);
-    if(user === null){
+    if (user === null) {
       return res.status(404).json({
         ok: true,
         message: 'No se pudo obtener. El usuario no existe.'
@@ -54,26 +54,26 @@ async function getUser(req, res){
   }
 }
 
-async function updateUser(req, res){
+async function updateUser(req, res) {
   try {
-    if(req.body.constructor === Object && Object.keys(req.body).length === 0){
+    if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
       return res.status(400).json({
         ok: false,
         message: 'Cuerpo de solicitud vacia.'
       });
     }
 
-    if(req.body.password){
+    if (req.body.password) {
       return res.status(400).json({
         ok: false,
         message: 'No se puede modificar contraseñas por este medio',
       });
     }
-    
+
     const userId = req.params.id;
     const userDataToUpdate = req.body;
     const updatedUser = await User.findByIdAndUpdate(userId, userDataToUpdate, { new: true, runValidators: true, context: 'query' });
-    if(updatedUser === null){
+    if (updatedUser === null) {
       return res.status(404).json({
         ok: true,
         message: 'No se pudo modificar. El usuario no existe.',
@@ -96,11 +96,11 @@ async function updateUser(req, res){
   }
 }
 
-async function deleteUser(req, res){
+async function deleteUser(req, res) {
   try {
     const userId = req.params.id;
     const deletedUser = await User.findByIdAndDelete(userId);
-    if(deletedUser === null){
+    if (deletedUser === null) {
       res.status(404).json({
         ok: true,
         message: 'No se pudo eliminar. El usuario no existe',

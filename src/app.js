@@ -11,8 +11,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-app.get('/', (req, res)=>{
-  return res.send('Hola! Estas en la ruta principal del servidor.');
+app.get('/', (req, res) => {
+  return res.send('Welcome stranger, you are on JRSystems dominion.');
 });
 
 app.use('/api/auth', authRouter);

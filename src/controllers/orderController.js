@@ -1,10 +1,10 @@
 const Order = require('../models/Order');
 
-async function getOrders(req, res){
+async function getOrders(req, res) {
   try {
-    orders = await Order.find({ }).populate('products.productId').populate('user');
+    orders = await Order.find({}).populate('products.productId').populate('user');
 
-    if(orders.length === 0){
+    if (orders.length === 0) {
       return res.json({
         ok: true,
         message: 'No se encontraron ordenes.',
@@ -27,11 +27,11 @@ async function getOrders(req, res){
   }
 }
 
-async function getOrder(req, res){
+async function getOrder(req, res) {
   try {
     const orderId = req.params.id;
     const order = await Order.findById(orderId);
-    if(order === null){
+    if (order === null) {
       return res.status(404).json({
         ok: true,
         message: 'No se pudo obtener. La orden no existe.'
@@ -54,7 +54,7 @@ async function getOrder(req, res){
   }
 }
 
-async function createOrder(req, res){
+async function createOrder(req, res) {
   try {
     let comingOrder = new Order(req.body);
     const newOrder = await comingOrder.save();
@@ -73,19 +73,19 @@ async function createOrder(req, res){
   }
 }
 
-async function updateOrder(req, res){
+async function updateOrder(req, res) {
   try {
-    if(req.body.constructor === Object && Object.keys(req.body).length === 0){
+    if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
       return res.status(400).json({
         ok: false,
         message: 'Cuerpo de solicitud vacia.'
       });
     }
-    
+
     const orderId = req.params.id;
     const orderDataToUpdate = req.body;
     const updatedOrder = await Order.findByIdAndUpdate(orderId, orderDataToUpdate, { new: true, runValidators: true, context: 'query' });
-    if(updatedOrder === null){
+    if (updatedOrder === null) {
       return res.status(404).json({
         ok: true,
         message: 'No se pudo modificar. La orden no existe.',
@@ -108,11 +108,11 @@ async function updateOrder(req, res){
   }
 }
 
-async function deleteOrder(req, res){
+async function deleteOrder(req, res) {
   try {
     const orderId = req.params.id;
     const deletedOrder = await User.findByIdAndDelete(orderId);
-    if(deletedOrder === null){
+    if (deletedOrder === null) {
       res.status(404).json({
         ok: true,
         message: 'No se pudo eliminar. La orden no existe',

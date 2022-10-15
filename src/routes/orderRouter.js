@@ -11,4 +11,4 @@ router.route('/:id')
   .put([authenticateJWT, checkIsAdmin], orderController.updateOrder)
   .delete([authenticateJWT, checkIsAdmin], orderController.deleteOrder);
 
-  module.exports = router;
+module.exports = router;

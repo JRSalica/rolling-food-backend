@@ -12,8 +12,8 @@ const VALID_ROLES = [
 ];
 
 const UserSchema = new Schema({
-  fullName: { 
-    type: String, 
+  fullName: {
+    type: String,
     required: [true, 'Debe ingresar un nombre.'],
     minLength: [2, 'El nombre debe tener mas de 2 caracteres.'],
     maxLength: [30, 'El nombre no debe superar los 30 caracteres.'],
@@ -45,24 +45,24 @@ const UserSchema = new Schema({
   },
 }, { timeStamps: true });
 
-UserSchema.plugin(uniqueValidator, {message: 'El email ingresado ya se encuentra registrado. Utilice otro.'});
+UserSchema.plugin(uniqueValidator, { message: 'El email ingresado ya se encuentra registrado. Utilice otro.' });
 
-UserSchema.pre('save', async function(next){
-  try{
+UserSchema.pre('save', async function (next) {
+  try {
     var user = this;
 
-    if(!user.isModified('password')) return next();
+    if (!user.isModified('password')) return next();
     user.password = await bcrypt.hash(user.password, SALT_WORK_FACTOR);
     next();
 
-  } catch(error) {
+  } catch (error) {
     throw console.error('Error de encriptado.', error);
   }
 });
 
-UserSchema.methods.comparePassword = async function(candidatePassword){
+UserSchema.methods.comparePassword = async function (candidatePassword) {
   try {
-    if(await bcrypt.compare(candidatePassword, this.password)) return true;
+    if (await bcrypt.compare(candidatePassword, this.password)) return true;
     return false;
 
   } catch (error) {
@@ -70,20 +70,22 @@ UserSchema.methods.comparePassword = async function(candidatePassword){
   }
 };
 
-UserSchema.methods.generateAuthToken = async function(){
+UserSchema.methods.generateAuthToken = async function () {
   try {
     const accessToken = await jwt.sign(this.toJSON(), process.env.SECRET, { expiresIn: '10h' });
     return accessToken;
-    
+
   } catch (error) {
     console.error(error);
     return error;
   }
 };
 
-UserSchema.set('toJSON', { transform: (document, returnedObject) => {
-  delete returnedObject.__v; 
-  delete returnedObject.password;
-}});
+UserSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    delete returnedObject.__v;
+    delete returnedObject.password;
+  }
+});
 
 module.exports = mongoose.model('User', UserSchema);

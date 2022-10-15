@@ -1,10 +1,10 @@
 const Product = require('../models/Product');
 
-async function getProducts(req, res){
+async function getProducts(req, res) {
   try {
-    products = await Product.find({ }).populate('category');
+    products = await Product.find({}).populate('category');
 
-    if(products.length === 0){
+    if (products.length === 0) {
       return res.json({
         ok: true,
         message: 'No se encontraron productos.'
@@ -27,11 +27,11 @@ async function getProducts(req, res){
   }
 }
 
-async function getProduct(req, res){
+async function getProduct(req, res) {
   try {
     const productId = req.params.id;
     const product = await Product.findById(productId);
-    if(product === null){
+    if (product === null) {
       return res.status(404).json({
         ok: true,
         message: 'No se pudo obtener. El producto no existe.',
@@ -54,7 +54,7 @@ async function getProduct(req, res){
   }
 }
 
-async function createProduct(req, res){
+async function createProduct(req, res) {
   try {
     let comingProduct = new Product(req.body);
     const newProduct = await comingProduct.save();
@@ -73,9 +73,9 @@ async function createProduct(req, res){
   }
 }
 
-async function updateProduct(req, res){
+async function updateProduct(req, res) {
   try {
-    if(req.body.constructor === Object && Object.keys(req.body).length === 0){
+    if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
       return res.status(400).json({
         ok: false,
         message: 'Cuerpo de solicitud vacia.',
@@ -85,7 +85,7 @@ async function updateProduct(req, res){
     const productId = req.params.id;
     const productDataToUpdate = req.body;
     const updatedProduct = await Product.findByIdAndUpdate(productId, productDataToUpdate, { new: true, runValidators: true, context: 'query' });
-    if(updatedProduct === null){
+    if (updatedProduct === null) {
       return res.status(404).json({
         ok: true,
         message: 'No se puede modificar. El usuario no existe.'
@@ -108,11 +108,11 @@ async function updateProduct(req, res){
   }
 }
 
-async function deleteProduct(req, res){
+async function deleteProduct(req, res) {
   try {
     const productId = req.params.id;
     const deletedProduct = await Product.findByIdAndDelete(productId);
-    if(deletedProduct === null){
+    if (deletedProduct === null) {
       return res.status(404).json({
         ok: true,
         message: 'No se pudo eliminar. El producto no existe.',

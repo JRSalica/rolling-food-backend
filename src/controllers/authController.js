@@ -1,7 +1,7 @@
 const User = require('../models/User');
 
 
-async function registerUser(req, res){
+async function registerUser(req, res) {
   try {
     let comingUser = new User(req.body);
     const registeredUser = await comingUser.save();
@@ -21,19 +21,19 @@ async function registerUser(req, res){
   }
 }
 
-async function loginUser(req, res){
-  try{
+async function loginUser(req, res) {
+  try {
     const { email, password } = req.body;
     const user = await User.findOne({ email }).select('+password');
 
-    if(user === null){
+    if (user === null) {
       return res.status(404).json({
         ok: false,
         message: 'No existe un usuario registrado con ese email.'
       });
     }
 
-    if(await user.comparePassword(password) === false){
+    if (await user.comparePassword(password) === false) {
       return res.status(401).json({
         ok: false,
         message: 'Contraseña incorrecta.'
@@ -41,13 +41,13 @@ async function loginUser(req, res){
     }
 
 
-    if(user.active === false){
+    if (user.active === false) {
       return res.status(401).json({
         ok: false,
         message: 'El usuario no se encuentra activo.'
       })
     }
-    
+
     const token = await user.generateAuthToken()
     res.json({
       ok: true,
@@ -56,7 +56,7 @@ async function loginUser(req, res){
       token,
     });
 
-  } catch(error) {
+  } catch (error) {
     console.error(error);
     return res.status(500).json({
       ok: false,

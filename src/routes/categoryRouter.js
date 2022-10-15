@@ -11,4 +11,4 @@ router.route('/:id')
   .put([authenticateJWT, checkIsAdmin], categoryController.updateCategory)
   .delete([authenticateJWT, checkIsAdmin], categoryController.deleteCategory);
 
-  module.exports = router;
+module.exports = router;

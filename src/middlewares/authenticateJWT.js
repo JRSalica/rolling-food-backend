@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
 
-function authenticateJWT(req, res, next){
+function authenticateJWT(req, res, next) {
   try {
     const authHeader = req.headers.authorization;
 
-    if(!authHeader){
+    if (!authHeader) {
       res.status(400).json({
         ok: false,
         message: 'No se pudo completar la autenticacion. Encabezado de autorizacion sin datos.'

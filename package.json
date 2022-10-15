@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "run build": "node src/index.js", 
     "run dev": "nodemon src/index.js"
   },
   "author": "jrsystems",

@@ -17,8 +17,10 @@ const CategorySchema = new Schema({
 });
 
 CategorySchema.set('toJSON', {
-  transform: (document, returnedObject) => {
-    delete returnedObject.__v;
+  transform: (document, returnedCategory) => {
+    returnedCategory.id = returnedCategory._id;
+    delete returnedCategory._id;
+    delete returnedCategory.__v;
   }
 });
 

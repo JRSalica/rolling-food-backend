@@ -43,6 +43,8 @@ const OrderSchema = new Schema({
 
 OrderSchema.set('toJSON', {
   transform: (document, returnedOrder) => {
+    returnedOrder.id = returnedOrder._id;
+    delete returnedOrder._id;
     delete returnedOrder.__v;
   }
 });

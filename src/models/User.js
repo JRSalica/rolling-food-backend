@@ -82,7 +82,7 @@ UserSchema.methods.generateAuthToken = async function () {
 };
 
 UserSchema.set('toJSON', {
-  transform: (returnedUser) => {
+  transform: (document, returnedUser) => {
     returnedUser.id = returnedUser._id;
     delete returnedUser._id;
     delete returnedUser.__v;

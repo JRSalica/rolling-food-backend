@@ -42,8 +42,8 @@ const OrderSchema = new Schema({
 }, { timestamps: true });
 
 OrderSchema.set('toJSON', {
-  transform: (document, returnedObject) => {
-    delete returnedObject.__v;
+  transform: (document, returnedOrder) => {
+    delete returnedOrder.__v;
   }
 });
 

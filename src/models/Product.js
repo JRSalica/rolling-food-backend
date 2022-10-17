@@ -35,8 +35,10 @@ const ProductSchema = new Schema({
 }, { timeStamps: true });
 
 ProductSchema.set('toJSON', {
-  transform: (document, returnedObject) => {
-    delete returnedObject.__v;
+  transform: (document, returnedProduct) => {
+    returnedProduct.id = returnedProduct._id;
+    delete returnedProduct._id;
+    delete returnedProduct.__v;
   }
 });
 

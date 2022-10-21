@@ -4,6 +4,16 @@ const User = require('../models/User');
 async function registerUser(req, res) {
   try {
     let comingUser = new User(req.body);
+
+    const { email } = comingUser;
+    const user = await User.findOne({ email });
+    if (user) {
+      return res.status(409).json({
+        ok: false,
+        message: 'Ya existe un usuario con ese mail, utilice otro.'
+      });
+    }
+
     const registeredUser = await comingUser.save();
     return res.status(201).json({
       ok: true,
